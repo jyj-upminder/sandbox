@@ -1,0 +1,27 @@
+{
+  "doc":"https://palantir.github.io/tslint/rules/",
+  "extends": ["tslint:recommended", "tslint-config-prettier"],
+  "rules": {
+    "no-console": false,
+    "ordered-imports": [false],
+    "object-literal-sort-keys": [false],
+    "interface-name": false,
+    "member-access": [true, "no-public"],
+    "member-ordering": [false, {"order": "fields-first"}],
+    "no-shadowed-variable": [
+      true,
+      {
+        "class": true,
+        "enum": true,
+        "function": true,
+        "interface": false,
+        "namespace": true,
+        "typeAlias": false,
+        "typeParameter": false,
+        "underscore": false
+      }
+    ],
+    "one-line" : false
+    
+}
+}
