@@ -1,0 +1,263 @@
+regular expression https://regexr.com/2rilj
+==================
+
+comment : /\*([^*]|[\r\n]|(\*+([^*/]|[\r\n])))*\*+/
+
+camelCase : ^([a-z]+([A-Z0-9][a-z]+)?)$
+
+path: ^([a-z]+(\.[a-z]+)*)$   titi.toto.tata
+
+// json schema
+https://json-schema.org/understanding-json-schema/reference/index.html
+
+https://jsonschemalint.com
+
+https://jsoneditoronline.org/?id=2a8f041bf51a40e5955f808984a736ec,
+
+// i18n
+https://github.com/json-schema-org/json-schema-spec/issues/53 i18n reference au libelle dans la langue
+
+So, using both JSON-LD and JSON Reference (and @handrews suggestion for JSON pointer (or JSON reference)), we could do:
+
+{
+    "@context": {"@language": {"$ref": "~$locale~"}},
+    "localization-strings": {"$ref": "locale-~$locale~.json"},
+    "type": "object",
+    "title": {"$ref": "#localization-strings/myTitle"},
+    "description": {"$ref": "#localization-strings/myDescription"}
+}
+~$locale~ could be substituted with the language code from an Accept-Language header or as otherwise determined by the application.
+
+This format is superior to using JSON-LD alone in that it allows us to maintain locale files independent for each language (as is convenient when having multiple translators) like locale-en-US.json with keys like:
+
+{
+     "myTitle": "My title",
+     "myDescription": "My description"
+}
+
+// mongodb
+https://docs.mongodb.com/manual/tutorial/model-embedded-one-to-many-relationships-between-documents/
+
+// other
+level: WORLD/COUNTRY/AGREEMENT /GROUP/WORK_LOCATION
+path: field,menu,action,...
+
+
+
+User (userId, clientId language ) => space role perimeter
+
+
+getUserSchema(clientId, userId, language, dbLevel, role)
+
+getUserMenu()
+
+getUserAction(clientId, userId, language, dbLevel, role)
+
+attach menu to space or to role
+
+
+userPreference : {
+
+	spaceCode: {
+
+	}
+}
+
+
+tout ce qui n'est pas relatif au uesr est créé asap et mis en collection cache
+
+- Definir le naming: camelCase pour les propriétés, format Word (\w) pour les Id
+- Definir la notion de reference pour PZ reference un champ, une propriété de champ, une action, un menu, un écran 
+	pour un niveau et un client 
+	ou un niveau et standard
+
+	a partir du user, on obtient les accès, le clientId (ie: FLAM) et le language (local:en-US)
+		l'accès contient l'espace, le rôle et le périmètre
+	le role est associé à un niveau de schéma client (ie country=fr)
+
+	le schéma de Database 
+		getRoleSchema(clientId, dbLevel, role) => produit le json du schema pour le role type:schema.world:fram.country:fr.role:gestpayroll
+		getUserSchema(clientId, userId, dbLevel, role) => produit le json du schema type:schema.world:fram.country:fr.role:gestpayroll.user:M1201
+
+		type:schema.world:fram.country:fr.role:gestpayroll => 
+
+	les json des libellés par langue pour le niveau:  type:locale.world:fram.country:fr => locale.fr_FR.json locale.en_US.json  etc
+
+	le menu pour le role et eventuellement le user type:menu.world:fram.role:gestpayroll
+
+	les actions pour le role et eventuellement le user type:action.world:fram.role:gestpayroll
+
+	les preferences du user
+
+
+		type:screen.id:createcontract.world:fram.country:fr.role:gestpayroll =>
+
+		type:space.id:payroll.world:fram:
+
+		comment combiner les menus
+
+concepts: field, menu, action screen i18nlabel
+
+any concept can be overwritten (redefined or partially redefined) at a specific a level (according to its definition, is it derivable and if so, at which level
+
+any concept has:
+		unique id => field.employees.identity.name  screen.contract.form action.contract.new action.contract.close
+		level of definition for a client => country:"fr" clientId:"flamingo"
+
+		=> from this data, we are able to appli inheritence
+
+		
+*************************
+
+Coding guidelines:
+
+https://adidas.github.io/contributing/typescript-coding-guidelines/
+https://github.com/basarat/typescript-book/blob/master/docs/styleguide/styleguide.md
+
+
+// cache
+https://medium.com/@danielsternlicht/caching-like-a-boss-in-nodejs-9bccbbc71b9b
+
+// service worker
+https://developers.google.com/web/ilt/pwa/introduction-to-service-worker
+
+// namespace
+https://www.typescriptlang.org/docs/handbook/namespaces.html
+
+//otherhttps://uptodate.frontendrescue.org/
+
+Auth
+====
+https://witekio.com/fr/blog/authentication-management-focus-keycloak/
+
+DSL 
+===
+Domain Specific language
+https://www.pleus.net/articles/boodsl/boodsl.htm
+
+
+GIT
+====
+https://www.nodegit.org/
+https://www.npmjs.com/package/simple-git
+https://git-fork.com/
+
+
+gatsbyhttps://thatcoder.space/getting-started-with-kafka-and-node-js-with-example/https://thatcoder.space/getting-started-with-kafka-and-node-js-with-example/
+
+=======
+https://medium.com/swlh/moving-to-gatsbyjs-517053dd98b4
+
+azur
+=====
+https://docs.microsoft.com/fr-fr/azure/cosmos-db/create-mongodb-nodejs
+
+
+AST 
+===
+https://levelup.gitconnected.com/writing-a-custom-typescript-ast-transformer-731e2b0b66e6
+
+
+https://solace.com/blog/experience-awesomeness-event-driven-microservices/
+https://solace.com/blog/achieving-microservices-flexibility-patterns/
+
+https://thatcoder.space/getting-started-with-kafka-and-node-js-with-example/
+
+Paramétrage
+===========
+Création du Paramétrage 
+
+Standard: 3 niveaux (2 dans un premier temps: World, Country)
+
+1 version de paramétrage (tous les niveaux):
+- Fields + liens avec referentiels
+- Screen (model, champs, validators, traitements(DSL), level )
+- Role (par espace: menu, grants, perimeters, level)
+- Messages ?
+  ===> produit une version du standard (ie: 1.2.1)
+
+Paramétrage client:
+- basé sur une version de paramétrage standard. Derivation et surcharge
+
+Création d'une nouvelle version du Standard:
+ - création d'une branche
+ - modification du paramétrage
+
+Exemple:
+ Standard (Version: 1.1.1 - Niveau Client: Standard, Type: World, Value: Global )
+  -fields
+    - Employee
+      - identity
+        - id
+        - name
+        ....
+    - contract
+  -Screen
+    - Gestion Employee 
+      - Fiche salarié
+      - Mutation
+      - ...
+  - Workflow
+    - Embauche
+    - Fin de contract
+    - Mutation  
+    - ...
+  - Referential
+    - Contrat
+      - Type de contrat
+    - Employee:
+      - Gender
+    - Mutual
+      - Country
+      - City
+      - Bank
+    - ...
+  - traitements
+  - Actions
+  - Roles 
+  - Menus 
+
+
+Actions: 
+  - Nouveau paramétrage -> Create branche (user.date.texte)
+  - Enregistrer -> Commit
+  - Version précédente -> Rollback
+  - Demande de validation de paramétrage -> Pull request
+  - Charger un paramétrage -> Clone
+  - Comparer 2 paramétrages -> Diff
+  - Deploy
+
+
+  Standard  
+    1
+      1.1
+        1.1.0
+          1.1.0.flamingo
+            1.1.1.flamingo
+            1.1.2.flamingo
+          1.1.0.crocodile
+            1.1.1.crocodile
+            1.1.2.crocodile
+        1.1.1
+        1.1.2
+      1.2
+        1.2.0
+        1.2.1
+        1.2.2
+    2
+      2.1
+        2.1.0
+        2.1.1
+        2.1.2
+
+
+  
+
+
+
+
+
+Tracabilité du paramétrage
+ - Versionning 
+ - gestion de source GIT
+

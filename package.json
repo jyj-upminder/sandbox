@@ -13,7 +13,7 @@
     "test": "jest",
     "build": "tsc",
     "doc": "npx typedoc --options ./typedocconfig.ts",
-    "exec": "ts-node tests/tests/test.ts",
+    "exec": "ts-node src/jyj.ts",
     "generate": "ts-node ./tools/generate_interface.ts",
     "format": "prettier --write \"src/**/*.ts\" \"src/**/*.js\"",
     "lint": "tslint -p tsconfig.json",
@@ -31,8 +31,10 @@
     "url": "https://github.com/jyj-upminder/sandbox.git"
   },
   "dependencies": {
+    "@types/workerpool": "^5.0.0",
     "ajv": "^6.10.2",
-    "ajv-keywords": "^3.4.1"
+    "ajv-keywords": "^3.4.1",
+    "workerpool": "^5.0.1"
   },
   "devDependencies": {
     "@types/mongodb": "^3.1.32",
